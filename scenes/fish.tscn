@@ -1,0 +1,111 @@
+[gd_scene load_steps=14 format=3 uid="uid://djn8dkkv4shg2"]
+
+[ext_resource type="Texture2D" uid="uid://blnnvsmq7mpo4" path="res://assets/Spritesheet/Fish Sprite Sheet.png" id="1_6k48t"]
+[ext_resource type="Script" path="res://scripts/fish.gd" id="1_wo3u3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5how"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxrjg"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kntp"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phq0y"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ae23a"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhyjp"]
+atlas = ExtResource("1_6k48t")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bular"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5how")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxrjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kntp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phq0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ae23a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhyjp")
+}],
+"loop": true,
+"name": &"swimming",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dsyno"]
+radius = 6.32456
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8i34a"]
+radius = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqygs"]
+bg_color = Color(0.149475, 0.149475, 0.149474, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7jfa"]
+bg_color = Color(0.808497, 0.470412, 0.261295, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="fish" type="CharacterBody2D"]
+position = Vector2(15, 12)
+collision_mask = 2
+script = ExtResource("1_wo3u3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_bular")
+animation = &"swimming"
+autoplay = "swimming"
+frame_progress = 0.599596
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_dsyno")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_8i34a")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -11.0
+offset_top = 5.0
+offset_right = 104.0
+offset_bottom = 30.0
+scale = Vector2(0.2, 0.2)
+theme_override_styles/background = SubResource("StyleBoxFlat_yqygs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_t7jfa")
+max_value = 3.0
+show_percentage = false
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
